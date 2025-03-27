@@ -8,61 +8,59 @@
 - **Nguyễn Thị Huyền Trang**
 
 ## **Môn học:**  
-- DS201.O11 - Deep Learning trong khoa học dữ liệu
+- DS104 - Tính toán song song và phân tán
 
-# Sử dụng mô hình chuỗi thời gian và học sâu để dự đoán nhiệt độ
-# Sử dụng mô hình chuỗi thời gian và học sâu để dự đoán nhiệt độ
+# Xây dựng hệ thống dự đoán giá trị bất động sản
 
 ## Giới thiệu
 
-Trước thực trạng biến đổi khí hậu và nhu cầu dự báo thời tiết ngày càng chính xác, dự đoán nhiệt độ trở thành một vấn đề quan trọng. Đồ án này nhằm xây dựng hệ thống dự báo nhiệt độ sử dụng các mô hình chuỗi thời gian truyền thống và mô hình học sâu, áp dụng trên dữ liệu thời tiết thực tế của TP. Hồ Chí Minh giai đoạn 2020–2023.
+Định giá bất động sản là một bài toán quan trọng và đầy thách thức, đặc biệt trong bối cảnh thị trường có nhiều biến động. Đồ án này tập trung xây dựng một hệ thống dự đoán giá trị bất động sản dựa trên dữ liệu thực tế được thu thập từ website Nhadatvui.vn, kết hợp với các mô hình học máy hiện đại trên nền tảng Spark MLlib.
 
-Chúng tôi tập trung dự đoán nhiệt độ theo khung giờ 3 tiếng một lần, sử dụng và so sánh hiệu suất của năm mô hình: **ARIMA**, **SARIMA**, **LSTM**, **CNN-LSTM**, và **LSTMs đa biến**.
+Dự án triển khai và so sánh nhiều mô hình khác nhau như: **Linear Regression**, **Decision Tree**, **Random Forest**, **Isotonic Regression**, và **Gradient Boosting**, nhằm chọn ra phương pháp tối ưu nhất cho bài toán định giá bất động sản.
 
 ## Các đặc điểm chính
 
-- ✅ **Nguồn dữ liệu thực tế**: Thu thập từ WorldWeatherOnline với khung thời gian 3h/lần, từ 01/2020 đến 04/2023.
-- 🔧 **Tiền xử lý dữ liệu**: Làm sạch dữ liệu, chuẩn hóa, loại bỏ nhiễu và chọn lọc đặc trưng.
-- 🤖 **Mô hình áp dụng**:
-  - ARIMA
-  - SARIMA
-  - LSTM
-  - CNN-LSTM
-  - LSTMs đa biến
-- 📈 **Đánh giá mô hình**: Sử dụng RMSE và R-squared để đo hiệu suất dự đoán.
-- 📊 **Trực quan hóa**: Biểu đồ thể hiện sự chênh lệch giữa giá trị thực và dự đoán.
+- 📥 **Nguồn dữ liệu thực tế**: Web Scraping từ Nhadatvui.vn với 4.000 bài đăng, 33 thuộc tính đa dạng.
+- 🧹 **Tiền xử lý dữ liệu chuyên sâu**:
+  - Làm sạch dữ liệu, loại bỏ đơn vị và chuẩn hóa về định dạng thống nhất.
+  - Xử lý giá trị thiếu bằng các phương pháp thống kê.
+  - Tối ưu logic với công thức suy diễn chiều dài: `ChiềuDài = DiệnTích / ChiềuRộng`.
+- 🧠 **Trích xuất đặc trưng thông minh**:
+  - Bucketizer cho phân nhóm người bán.
+  - Phân cấp tỉnh thành theo trình độ phát triển.
+  - String Indexing và One-hot Encoding cho biến phân loại.
+  - Log-transform cho biến mục tiêu `Tổng Giá`.
+- 📊 **Mô hình triển khai**:
+  - Linear Regression
+  - Decision Tree
+  - Random Forest
+  - Isotonic Regression
+  - Gradient Boosted Regression
+- 🧪 **Đánh giá mô hình**: Sử dụng RMSE, MAE, R².
 
 ## Các nhiệm vụ nghiên cứu chính
 
-- Thu thập và xử lý bộ dữ liệu thời tiết TP.HCM theo mốc thời gian 3 giờ/lần.
-- Tiền xử lý dữ liệu: làm sạch, đổi định dạng, chuẩn hóa về khoảng [0,1].
-- Chọn lọc 5 thuộc tính đầu vào chính: `Hour`, `Temperature`, `Forecast`, `Pressure`, `Gust`.
-- Triển khai các mô hình dự báo:
-  - **ARIMA**: Hiệu suất kém do không xử lý được yếu tố mùa vụ.
-  - **SARIMA**: Dự báo chính xác nhờ khai thác tính chu kỳ của dữ liệu.
-  - **LSTM**: Tốt cho dữ liệu chuỗi phức tạp, độ chính xác cao.
-  - **CNN-LSTM**: Hiệu suất thấp nếu không chuẩn hóa dữ liệu, nhưng cải thiện rõ rệt nếu dùng MinMaxScaler.
-  - **LSTMs đa biến**: Tối ưu nhất nếu chọn đúng tổ hợp biến đầu vào. R-squared đạt đến 0.999.
-- So sánh, phân tích ưu – nhược điểm và đánh giá mô hình bằng biểu đồ + bảng tổng hợp.
+- Thu thập dữ liệu thực tế từ sàn giao dịch bất động sản bằng Web Scraping.
+- Xử lý và chuẩn hóa bộ dữ liệu để phù hợp với yêu cầu mô hình hóa.
+- Áp dụng các kỹ thuật phân tích dữ liệu: loại bỏ ngoại lệ, phân cụm, encoding.
+- Triển khai thử nghiệm và đánh giá 5 mô hình học máy trên Spark MLlib.
+- So sánh kết quả để tìm ra mô hình hiệu quả nhất.
+- Phân tích lý do hiệu suất khác nhau giữa các mô hình.
 
 ## Hướng phát triển
 
-- 📌 **Tối ưu mô hình**:
-  - Tinh chỉnh siêu tham số (hyperparameter tuning)
-  - Sử dụng các kỹ thuật tăng cường đặc trưng
-- 📌 **Mở rộng ứng dụng**:
-  - Triển khai trên dữ liệu thời tiết thực tế theo thời gian thực
-  - Áp dụng cho các vùng địa lý khác
-- 📌 **Kết hợp mô hình ngôn ngữ lớn (LLM)**:
-  - Phân tích dữ liệu thời tiết dạng văn bản
-  - Tăng cường khả năng diễn giải và đề xuất hành động từ dự báo
-- 📌 **Xây dựng hệ thống AI hoàn chỉnh**: Giao diện người dùng + hệ thống backend tự động hóa quá trình thu thập, xử lý, dự đoán, hiển thị kết quả.
+- 🔍 **Nâng cấp dữ liệu đầu vào**: Kết hợp thêm dữ liệu vệ tinh, dữ liệu giao thông hoặc tiện ích xung quanh.
+- ⚙️ **Cải tiến mô hình**:
+  - Sử dụng kỹ thuật ensemble nâng cao.
+  - Áp dụng feature selection tự động và kỹ thuật giảm chiều dữ liệu.
+- 🧩 **Kết hợp mô hình học sâu**: Đưa vào MLP hoặc mô hình Attention để dự đoán phi tuyến tốt hơn.
+- 📈 **Triển khai hệ thống thực tế**:
+  - Tạo dashboard định giá nhà.
+  - Gợi ý vùng giá hợp lý cho người mua/bán.
 
 ---
 
-🧠 **Từ khóa**: Chuỗi thời gian, học sâu, dự báo nhiệt độ, ARIMA, SARIMA, LSTM, CNN-LSTM, LSTMs.
-
 📬 **Liên hệ**:  
-Nguyễn Thị Huyền Trang (21520488@gm.uit.edu.vn)  
 Nguyễn Thị Mai Trinh (21522718@gm.uit.edu.vn)  
+Nguyễn Thị Huyền Trang (21520488@gm.uit.edu.vn)  
 Trường Đại học Công nghệ Thông tin – ĐHQG TP.HCM
